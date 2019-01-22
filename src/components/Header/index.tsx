@@ -5,6 +5,7 @@ import { Filters } from 'src/components/Filters';
 import { Icon, IconNames } from 'src/components/Icon';
 
 import { colors, fonts } from 'src/styles/variables';
+import { cache } from 'src/utils/cache';
 
 export const HeaderContext = React.createContext({ showFilters: true, toggleFilters(showFilters: boolean) {} });
 
@@ -13,14 +14,14 @@ export const HeaderContextProvider: React.FunctionComponent = ({ children }) => 
     current => {
       const next = current ? false : true;
       if (next) {
-        localStorage.removeItem('hideFilters');
+        cache.remove('hideFilters');
       } else {
-        localStorage.setItem('hideFilters', 'true');
+        cache.set('hideFilters', 'true');
       }
 
       return next;
     },
-    localStorage.getItem('hideFilters') ? false : true
+    cache.get('hideFilters') ? false : true
   );
 
   return <HeaderContext.Provider value={{ showFilters, toggleFilters }}>{children}</HeaderContext.Provider>;

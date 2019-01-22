@@ -5,6 +5,7 @@ import { Filter } from 'src/components/Filter';
 import { IconNames } from 'src/components/Icon';
 
 import { colors } from 'src/styles/variables';
+import { cache } from 'src/utils/cache';
 
 export type AmountFilter = 'below' | 'above';
 
@@ -20,7 +21,7 @@ export const AmountFilterContext = React.createContext<IAmountFilterContext>({
 
 export const amountFilterReducer = (current: AmountFilter, next: AmountFilter) => {
   if (next !== current) {
-    localStorage.setItem('amountFilter', next);
+    cache.set('amountFilter', next);
     return next;
   }
 
@@ -28,7 +29,7 @@ export const amountFilterReducer = (current: AmountFilter, next: AmountFilter) =
 };
 
 export const AmountFilterProvider: React.FunctionComponent = ({ children }) => {
-  const defaultAmountFilter = localStorage.getItem('amountFilter') || 'below';
+  const defaultAmountFilter = cache.get('amountFilter') || 'below';
   const [amountFilter, setAmountFilter] = React.useReducer(amountFilterReducer, defaultAmountFilter as AmountFilter);
 
   return (

@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex, Text } from 'rebass';
 
 import { colors } from 'src/styles/variables';
+import { cache } from 'src/utils/cache';
 
 export interface AmountContext {
   amount: number;
@@ -11,14 +12,14 @@ export interface AmountContext {
 export const AmountContext = React.createContext<AmountContext>({ amount: 50, setAmount(amount) {} });
 
 export const AmountProvider: React.FunctionComponent = ({ children }) => {
-  const defaultAmount = Number(localStorage.getItem('amount')) || 50;
+  const defaultAmount = Number(cache.get('amount')) || 50;
   const [amount, setState] = React.useState(defaultAmount);
 
   const setAmount = React.useCallback(
     v => {
       if (v !== amount) {
         setState(v);
-        localStorage.setItem('amount', v);
+        cache.set('amount', v);
       }
     },
     [amount]

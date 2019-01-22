@@ -5,6 +5,7 @@ import { IconNames } from 'src/components/Icon';
 import { Filter } from 'src/components/Filter';
 
 import { colors } from 'src/styles/variables';
+import { cache } from 'src/utils/cache';
 
 export const filterNames: { [key: string]: Category } = {
   all: 'all',
@@ -49,7 +50,7 @@ export const CategoryFilterContext = React.createContext<ICategoryFilterContext>
 
 export const categoryReducer = (current: Category, next: Category) => {
   if (next !== current) {
-    localStorage.setItem('category', next);
+    cache.set('category', next);
     return next;
   }
 
@@ -57,7 +58,7 @@ export const categoryReducer = (current: Category, next: Category) => {
 };
 
 export const CategoryFilterProvider: React.FunctionComponent = ({ children }) => {
-  const defaultCategory = localStorage.getItem('category') || 'all';
+  const defaultCategory = cache.get('category') || 'all';
   const [category, setCategory] = React.useReducer(categoryReducer, defaultCategory as Category);
 
   return <CategoryFilterContext.Provider value={{ category, setCategory }}>{children}</CategoryFilterContext.Provider>;

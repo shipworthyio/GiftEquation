@@ -9,7 +9,7 @@ let gsheetOptions = {
     type: 'service_account',
     project_id: process.env.GS_PROJECT_ID,
     private_key_id: process.env.GS_PRIVATE_KEY_ID,
-    private_key: process.env.GS_PRIVATE_KEY,
+    private_key: (process.env.GS_PRIVATE_KEY || '').replace('\\n', '\n'),
     client_email: process.env.GS_CLIENT_EMAIL,
     client_id: process.env.GS_CLIENT_ID,
     auth_uri: 'https://accounts.google.com/o/oauth2/auth',
