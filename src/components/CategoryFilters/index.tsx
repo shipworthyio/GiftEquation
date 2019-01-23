@@ -5,7 +5,6 @@ import { IconNames } from 'src/components/Icon';
 import { Filter } from 'src/components/Filter';
 
 import { colors, breakpoints } from 'src/styles/variables';
-import { cache } from 'src/utils/cache';
 import { getEmSize } from 'src/styles/mixins';
 
 export const CATEGORY_FILTER_ALL = 'all';
@@ -76,6 +75,7 @@ export const CategoryFilters = () => {
     <Flex
       flexWrap="nowrap"
       pb="20px"
+      pl="9px"
       mb="-20px"
       css={{
         overflow: 'auto',

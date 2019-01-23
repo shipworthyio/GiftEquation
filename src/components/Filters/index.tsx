@@ -96,8 +96,8 @@ export const Filters = () => {
           </Box>
 
           <Box width={[1, 1, 1, 2 / 3]} mt="25px" mb="20px" css={{ borderLeft: '2px solid lightgrey', flex: 1 }}>
-            <Box ml="9px">
-              <Text pb="15px" pl="15px" fontWeight="bold" fontSize={dimensions.fontSize.large}>
+            <Box>
+              <Text pb="15px" pl="24px" fontWeight="bold" fontSize={dimensions.fontSize.large}>
                 Filters
               </Text>
 
