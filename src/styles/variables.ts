@@ -10,6 +10,10 @@ export const colors = {
 
   green: '#34b25d',
 
+  white: '#fff',
+  black: '#383838',
+  gray: '#3b3636',
+
   brand: '#663399',
   lilac: '#9d7cbf',
   accent: '#ffb238',
@@ -21,13 +25,6 @@ export const colors = {
     whisper: '#fbfafc',
   },
   code: '#fcf6f0',
-  gray: {
-    dark: 'hsla(270, 17.119554496%, 0%, 0.92)',
-    copy: 'hsla(270, 15.797828016000002%, 0%, 0.88)',
-    calm: 'rgba(0, 0, 0, 0.54)',
-  },
-  white: '#fff',
-  black: '#383838',
 };
 
 export const fonts = {
@@ -55,10 +52,10 @@ export const dimensions = {
   fontSize: {
     regular: 16,
     large: 18,
-    xs: 10,
-    sm: 12,
-    base: 14,
-    md: 18,
+    xs: 8,
+    sm: 10,
+    base: 12,
+    md: 14,
     lg: 22,
   },
   headingSizes: {

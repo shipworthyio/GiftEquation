@@ -142,9 +142,9 @@ export default `
 
   blockquote {
     margin: .8rem 0;
-    padding: .5rem 1rem;
+    padding: .5rem 1rem;ff
     border-left: .25rem solid ${colors.ui.light};
-    color: ${colors.gray.calm};
+    color: ${colors.gray};
 
     p {
       &:last-child {

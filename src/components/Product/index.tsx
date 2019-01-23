@@ -51,8 +51,9 @@ export const Product: React.FunctionComponent<IProduct> = React.memo(({ product,
         <Flex alignItems="center" flex="1">
           <Text
             mt="20px"
-            color={colors.gray.calm}
             fontSize={dimensions.fontSize.base}
+            fontWeight="bold"
+            color={colors.gray}
             css={{
               flex: 1,
               whiteSpace: 'nowrap',
@@ -64,7 +65,7 @@ export const Product: React.FunctionComponent<IProduct> = React.memo(({ product,
         </Flex>
 
         <Flex alignItems="center">
-          <Text my="10px" color={colors.green} fontSize={dimensions.fontSize.md}>
+          <Text my="10px" color={colors.green} fontSize={dimensions.fontSize.md} fontWeight="bold">
             {price || '$11.99'}
           </Text>
         </Flex>
