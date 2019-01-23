@@ -5,24 +5,11 @@ import { Filters } from 'src/components/Filters';
 import { Icon, IconNames } from 'src/components/Icon';
 
 import { colors, fonts } from 'src/styles/variables';
-import { cache } from 'src/utils/cache';
 
 export const HeaderContext = React.createContext({ showFilters: true, toggleFilters(showFilters: boolean) {} });
 
 export const HeaderContextProvider: React.FunctionComponent = ({ children }) => {
-  const [showFilters, toggleFilters] = React.useReducer(
-    current => {
-      const next = current ? false : true;
-      if (next) {
-        cache.remove('hideFilters');
-      } else {
-        cache.set('hideFilters', 'true');
-      }
-
-      return next;
-    },
-    cache.get('hideFilters') ? false : true
-  );
+  const [showFilters, toggleFilters] = React.useState(true);
 
   return <HeaderContext.Provider value={{ showFilters, toggleFilters }}>{children}</HeaderContext.Provider>;
 };
@@ -36,7 +23,7 @@ const FilterToggle = () => {
         icon={IconNames.caret}
         color={colors.black}
         css={{ cursor: 'pointer', transform: showFilters ? 'scale(-1)' : '' }}
-        onClick={toggleFilters}
+        onClick={() => toggleFilters(!showFilters)}
       />
     </Flex>
   );

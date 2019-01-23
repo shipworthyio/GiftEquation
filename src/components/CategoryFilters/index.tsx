@@ -50,18 +50,8 @@ export const CategoryFilterContext = React.createContext<ICategoryFilterContext>
   setCategory(category) {},
 });
 
-export const categoryReducer = (current: Category, next: Category) => {
-  if (next !== current) {
-    cache.set('category', next);
-    return next;
-  }
-
-  return current;
-};
-
 export const CategoryFilterProvider: React.FunctionComponent = ({ children }) => {
-  const defaultCategory = cache.get('__gfteq.category') || CATEGORY_FILTER_ALL;
-  const [category, setCategory] = React.useReducer(categoryReducer, defaultCategory as Category);
+  const [category, setCategory] = React.useState(CATEGORY_FILTER_ALL as Category);
 
   return <CategoryFilterContext.Provider value={{ category, setCategory }}>{children}</CategoryFilterContext.Provider>;
 };
@@ -73,7 +63,7 @@ export interface ICategoryFilter {
 const CategoryFilter: React.FunctionComponent<ICategoryFilter> = React.memo(({ name }) => {
   const { category, setCategory } = React.useContext(CategoryFilterContext);
 
-  const onClick = React.useCallback(() => setCategory(name as Category), [name]);
+  const onClick = React.useCallback(() => setCategory(name), [name]);
 
   return (
     <Filter name={name} icon={IconNames[name]} isActive={category === name} bg={colors.category} onClick={onClick} />
