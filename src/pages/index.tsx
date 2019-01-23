@@ -9,7 +9,7 @@ import { Header } from 'src/components/Header';
 import { Products, IProduct } from 'src/components/Product';
 import SEO from 'src/components/SEO';
 
-import { colors } from 'src/styles/variables';
+import { colors, fonts } from 'src/styles/variables';
 
 import 'src/styles/normalize';
 import 'modern-normalize';
@@ -34,7 +34,7 @@ const Page: React.FunctionComponent<IPage> = React.memo(({ data }) => {
       <AmountFilterProvider>
         <CategoryFilterProvider>
           <AmountProvider>
-            <Box bg={colors.background} css={{ position: 'relative', fontFamily: 'Montserrat' }}>
+            <Box bg={colors.background} css={{ position: 'relative', fontFamily: fonts.montserrat }}>
               <Header />
 
               <Box mx="auto" py="40px" css={{ maxWidth: 1380 }}>

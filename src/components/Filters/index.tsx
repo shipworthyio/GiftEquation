@@ -73,24 +73,35 @@ export const Filters = () => {
     >
       {showFilters && (
         <Flex flexWrap="wrap">
-          <Box width={[1, 1, 1, 1 / 3]} py="20px" css={{ boxShadow: `0px 2px 0px 0px lightgrey` }}>
-            <Box pb="15px" pl="15px">
-              <Text fontSize={[3]}>Amount</Text>
+          <Box
+            width={[1, 1, 1, 1 / 3]}
+            pt="25px"
+            pb="20px"
+            pl="24px"
+            pr="15px"
+            css={{ boxShadow: `0px 2px 0px 0px lightgrey` }}
+          >
+            <Box pb="15px">
+              <Text fontWeight="bold" fontSize={[3]}>
+                Amount
+              </Text>
             </Box>
 
-            <Flex flexWrap="nowrap" pl="15px">
+            <Flex flexWrap="nowrap">
               <AmountInput />
 
               <AmountFilters />
             </Flex>
           </Box>
 
-          <Box width={[1, 1, 1, 2 / 3]} my="20px" css={{ borderLeft: '2px solid lightgrey', flex: 1 }}>
-            <Box pb="15px" pl="15px">
-              <Text fontSize={[3]}>Filters</Text>
-            </Box>
+          <Box width={[1, 1, 1, 2 / 3]} mt="25px" mb="20px" css={{ borderLeft: '2px solid lightgrey', flex: 1 }}>
+            <Box pl="9px">
+              <Text pb="15px" pl="15px" fontWeight="bold" fontSize={[3]}>
+                Filters
+              </Text>
 
-            <CategoryFilters />
+              <CategoryFilters />
+            </Box>
           </Box>
         </Flex>
       )}

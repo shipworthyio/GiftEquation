@@ -18,12 +18,17 @@ const FilterToggle = () => {
   const { showFilters, toggleFilters } = React.useContext(HeaderContext);
 
   return (
-    <Flex py="10px" pl="10px" alignItems="center" justifyContent="center" css={{ height: '100%' }}>
+    <Flex
+      p="10px 24px"
+      alignItems="center"
+      justifyContent="center"
+      css={{ height: '100%' }}
+      onClick={() => toggleFilters(!showFilters)}
+    >
       <Icon
         icon={IconNames.caret}
         color={colors.black}
         css={{ cursor: 'pointer', transform: showFilters ? 'scale(-1)' : '' }}
-        onClick={() => toggleFilters(!showFilters)}
       />
     </Flex>
   );
@@ -33,32 +38,25 @@ export const Header = React.memo(() => {
   return (
     <Box bg={colors.white} css={{ position: 'sticky', top: 0, left: 0, right: 0, zIndex: 100, userSelect: 'none' }}>
       <HeaderContextProvider>
-        <Box mb="2px" p="10px 30px" css={{ boxShadow: `0px 2px 4px lightgrey`, height: 64 }}>
+        <Box mb="2px" css={{ boxShadow: `0px 2px 4px lightgrey`, height: 64 }}>
           <Flex alignItems="center" css={{ height: '100%' }}>
-            <Icon
-              icon={IconNames.logo}
+            <Flex
+              pl="24px"
+              alignItems="center"
               css={{
-                cursor: 'pointer',
+                flex: 1,
               }}
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-            />
-
-            <Flex
-              pl="10px"
-              css={{
-                flex: 1,
-              }}
             >
-              <Text
-                fontFamily={fonts.sansSerif}
-                fontWeight="bold"
-                css={{ cursor: 'pointer' }}
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+              <Icon
+                icon={IconNames.logo}
+                css={{
+                  cursor: 'pointer',
                 }}
-              >
+              />
+              <Text pl="15px" fontWeight="bold" css={{ cursor: 'pointer' }}>
                 Gift Equation
               </Text>
             </Flex>
