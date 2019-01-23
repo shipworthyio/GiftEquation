@@ -4,15 +4,17 @@ import { Flex, Text } from 'rebass';
 import { colors } from 'src/styles/variables';
 import { cache } from 'src/utils/cache';
 
+const DEFAULT_AMOUNT = 0;
+
 export interface AmountContext {
   amount: number;
   setAmount(amount: number): void;
 }
 
-export const AmountContext = React.createContext<AmountContext>({ amount: 50, setAmount(amount) {} });
+export const AmountContext = React.createContext<AmountContext>({ amount: DEFAULT_AMOUNT, setAmount(amount) {} });
 
 export const AmountProvider: React.FunctionComponent = ({ children }) => {
-  const defaultAmount = Number(cache.get('amount')) || 50;
+  const defaultAmount = Number(cache.get('__gfteq.amount')) || DEFAULT_AMOUNT;
   const [amount, setState] = React.useState(defaultAmount);
 
   const setAmount = React.useCallback(

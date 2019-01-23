@@ -7,8 +7,10 @@ import { Filter } from 'src/components/Filter';
 import { colors } from 'src/styles/variables';
 import { cache } from 'src/utils/cache';
 
+export const CATEGORY_FILTER_ALL = 'all';
+
 export const filterNames: { [key: string]: Category } = {
-  all: 'all',
+  all: CATEGORY_FILTER_ALL,
   techie: 'techie',
   green: 'green',
   outdoorsy: 'outdoorsy',
@@ -44,7 +46,7 @@ export interface ICategoryFilterContext {
 }
 
 export const CategoryFilterContext = React.createContext<ICategoryFilterContext>({
-  category: 'all',
+  category: CATEGORY_FILTER_ALL,
   setCategory(category) {},
 });
 
@@ -58,7 +60,7 @@ export const categoryReducer = (current: Category, next: Category) => {
 };
 
 export const CategoryFilterProvider: React.FunctionComponent = ({ children }) => {
-  const defaultCategory = cache.get('category') || 'all';
+  const defaultCategory = cache.get('__gfteq.category') || CATEGORY_FILTER_ALL;
   const [category, setCategory] = React.useReducer(categoryReducer, defaultCategory as Category);
 
   return <CategoryFilterContext.Provider value={{ category, setCategory }}>{children}</CategoryFilterContext.Provider>;

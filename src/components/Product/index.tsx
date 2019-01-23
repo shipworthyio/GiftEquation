@@ -2,9 +2,9 @@ import memoize from 'fast-memoize';
 import React from 'react';
 import { Image, Text, Link, Flex } from 'rebass';
 
-import { AmountFilterContext, AmountFilter } from 'src/components/AmountFilters';
+import { AmountFilterContext, AmountFilter, AMOUNT_FILTER_BELOW } from 'src/components/AmountFilters';
 import { AmountContext } from 'src/components/AmountInput';
-import { CategoryFilterContext, Category } from 'src/components/CategoryFilters';
+import { CategoryFilterContext, Category, CATEGORY_FILTER_ALL } from 'src/components/CategoryFilters';
 
 import { colors, dimensions, heights, widths } from 'src/styles/variables';
 
@@ -78,7 +78,7 @@ export interface IProducts {
 export const filterProducts = memoize(
   (products: IProduct[], amount: number, amountFilter: AmountFilter, categoryFilter: Category): IProduct[] => {
     return products
-      .filter(({ price, category = 'all', imageurl }) => {
+      .filter(({ price, category = CATEGORY_FILTER_ALL, imageurl }) => {
         if (!price || !imageurl) {
           return false;
         }
@@ -89,13 +89,13 @@ export const filterProducts = memoize(
         }
 
         let inCategory = true;
-        if (categoryFilter && categoryFilter !== 'all') {
+        if (categoryFilter && categoryFilter !== CATEGORY_FILTER_ALL) {
           const categories = category ? category.split(',').map(c => c.toLowerCase().trim()) : [];
           inCategory = categories.includes(categoryFilter);
         }
 
         let inRange = true;
-        if (amountFilter === 'below') {
+        if (amountFilter === AMOUNT_FILTER_BELOW) {
           inRange = cost <= amount;
         } else {
           inRange = cost >= amount;
@@ -106,6 +106,10 @@ export const filterProducts = memoize(
       .sort((a, b) => {
         const priceA = Number(a.price.replace('$', ''));
         const priceB = Number(b.price.replace('$', ''));
+
+        if (amountFilter === AMOUNT_FILTER_BELOW) {
+          return priceA < priceB ? 1 : -1;
+        }
 
         return priceA > priceB ? 1 : -1;
       });

@@ -7,6 +7,10 @@ import { IconNames } from 'src/components/Icon';
 import { colors } from 'src/styles/variables';
 import { cache } from 'src/utils/cache';
 
+export const AMOUNT_FILTER_ABOVE = 'above';
+export const AMOUNT_FILTER_BELOW = 'below';
+export const DEFAULT_AMOUNT_FILTER = AMOUNT_FILTER_ABOVE;
+
 export type AmountFilter = 'below' | 'above';
 
 export interface IAmountFilterContext {
@@ -15,7 +19,7 @@ export interface IAmountFilterContext {
 }
 
 export const AmountFilterContext = React.createContext<IAmountFilterContext>({
-  amountFilter: 'below',
+  amountFilter: AMOUNT_FILTER_BELOW,
   setAmountFilter(amountFilter) {},
 });
 
@@ -29,7 +33,7 @@ export const amountFilterReducer = (current: AmountFilter, next: AmountFilter) =
 };
 
 export const AmountFilterProvider: React.FunctionComponent = ({ children }) => {
-  const defaultAmountFilter = cache.get('amountFilter') || 'below';
+  const defaultAmountFilter = cache.get('__gfteq.amountFilter') || DEFAULT_AMOUNT_FILTER;
   const [amountFilter, setAmountFilter] = React.useReducer(amountFilterReducer, defaultAmountFilter as AmountFilter);
 
   return (
@@ -45,17 +49,17 @@ export const AmountFilters: React.FunctionComponent = () => {
       <Filter
         name="below"
         icon={IconNames.arrowDown}
-        isActive={amountFilter === 'below'}
+        isActive={amountFilter === AMOUNT_FILTER_BELOW}
         bg={colors.amountFilter}
-        onClick={() => setAmountFilter('below')}
+        onClick={() => setAmountFilter(AMOUNT_FILTER_BELOW)}
       />
 
       <Filter
         name="above"
         icon={IconNames.arrowUp}
-        isActive={amountFilter === 'above'}
+        isActive={amountFilter === AMOUNT_FILTER_ABOVE}
         bg={colors.amountFilter}
-        onClick={() => setAmountFilter('above')}
+        onClick={() => setAmountFilter(AMOUNT_FILTER_ABOVE)}
       />
     </Flex>
   );
