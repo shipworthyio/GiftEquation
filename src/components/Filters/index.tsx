@@ -8,7 +8,7 @@ import { Icon, IconNames } from 'src/components/Icon';
 import { HeaderContext } from 'src/components/Header';
 
 import { getEmSize } from 'src/styles/mixins';
-import { colors, breakpoints } from 'src/styles/variables';
+import { colors, breakpoints, dimensions } from 'src/styles/variables';
 
 const MobileFilter = () => {
   const { showFilters, toggleFilters } = React.useContext(HeaderContext);
@@ -22,8 +22,9 @@ const MobileFilter = () => {
 
   return (
     <Flex
-      onClick={toggleFilters}
+      p="15px 24px"
       alignItems="center"
+      onClick={toggleFilters}
       css={{
         display: 'none',
         [`@media (max-width: ${getEmSize(breakpoints.md)}em)`]: {
@@ -32,8 +33,8 @@ const MobileFilter = () => {
       }}
     >
       <Box
-        px="15px"
-        my="10px"
+        pr="24px"
+        fontSize={dimensions.fontSize.large}
         css={{
           boxShadow: '1px 0px 0px 0px lightgrey',
         }}
@@ -41,7 +42,7 @@ const MobileFilter = () => {
         ${amount}
       </Box>
 
-      <Flex flex="1" px="15px" my="10px" alignItems="center">
+      <Flex flex="1" pl="24px" alignItems="center">
         <Flex
           alignItems="center"
           justifyContent="center"
@@ -82,7 +83,7 @@ export const Filters = () => {
             css={{ boxShadow: `0px 2px 0px 0px lightgrey` }}
           >
             <Box pb="15px">
-              <Text fontWeight="bold" fontSize={[3]}>
+              <Text fontWeight="bold" fontSize={dimensions.fontSize.large}>
                 Amount
               </Text>
             </Box>
@@ -95,8 +96,8 @@ export const Filters = () => {
           </Box>
 
           <Box width={[1, 1, 1, 2 / 3]} mt="25px" mb="20px" css={{ borderLeft: '2px solid lightgrey', flex: 1 }}>
-            <Box pl="9px">
-              <Text pb="15px" pl="15px" fontWeight="bold" fontSize={[3]}>
+            <Box ml="9px">
+              <Text pb="15px" pl="15px" fontWeight="bold" fontSize={dimensions.fontSize.large}>
                 Filters
               </Text>
 
