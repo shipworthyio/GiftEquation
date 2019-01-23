@@ -34,7 +34,7 @@ const Page: React.FunctionComponent<IPage> = React.memo(({ data }) => {
       <AmountFilterProvider>
         <CategoryFilterProvider>
           <AmountProvider>
-            <Box bg={colors.background} css={{ position: 'relative' }}>
+            <Box bg={colors.background} css={{ position: 'relative', fontFamily: 'Montserrat' }}>
               <Header />
 
               <Box mx="auto" py="40px" css={{ maxWidth: 1380 }}>
