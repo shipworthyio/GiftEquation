@@ -38,7 +38,6 @@ const Page: React.FunctionComponent<IPage> = React.memo(({ data }) => {
               css={{
                 position: 'relative',
                 fontFamily: fonts.montserrat,
-                overflowX: 'hidden',
                 '&::-webkit-scrollbar': {
                   display: 'none',
                 },
@@ -46,7 +45,7 @@ const Page: React.FunctionComponent<IPage> = React.memo(({ data }) => {
             >
               <Header />
 
-              <Box mx="auto" py="40px" css={{ maxWidth: 1380 }}>
+              <Box mx="auto" py="40px" css={{ maxWidth: 1380, overflowX: 'hidden' }}>
                 <Products products={data.allGoogleSheetProductsRow.edges.map(e => e.node)} />
               </Box>
             </Box>
