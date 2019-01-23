@@ -31,6 +31,7 @@ export const Product: React.FunctionComponent<IProduct> = React.memo(({ product,
         bg={colors.white}
         p="20px"
         css={{
+          borderRadius: '8px',
           height: heights.product,
           display: 'flex',
           alignItems: 'center',
