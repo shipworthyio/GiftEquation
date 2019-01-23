@@ -25,6 +25,7 @@ export const Product: React.FunctionComponent<IProduct> = React.memo(({ product,
   return (
     <Flex m="10px" alignItems="center" justifyContent="center">
       <Link
+        target="__blank"
         href={affiliatelink}
         width={widths.product}
         bg={colors.white}
