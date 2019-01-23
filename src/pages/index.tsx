@@ -11,7 +11,6 @@ import SEO from 'src/components/SEO';
 
 import { colors, fonts } from 'src/styles/variables';
 
-import 'src/styles/normalize';
 import 'modern-normalize';
 
 interface IEdge {
@@ -36,7 +35,14 @@ const Page: React.FunctionComponent<IPage> = React.memo(({ data }) => {
           <AmountProvider>
             <Box
               bg={colors.background}
-              css={{ position: 'relative', fontFamily: fonts.montserrat, overflowX: 'hidden' }}
+              css={{
+                position: 'relative',
+                fontFamily: fonts.montserrat,
+                overflowX: 'hidden',
+                '&::-webkit-scrollbar': {
+                  display: 'none',
+                },
+              }}
             >
               <Header />
 

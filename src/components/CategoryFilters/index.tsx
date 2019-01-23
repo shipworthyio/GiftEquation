@@ -4,8 +4,9 @@ import { Flex } from 'rebass';
 import { IconNames } from 'src/components/Icon';
 import { Filter } from 'src/components/Filter';
 
-import { colors } from 'src/styles/variables';
+import { colors, breakpoints } from 'src/styles/variables';
 import { cache } from 'src/utils/cache';
+import { getEmSize } from 'src/styles/mixins';
 
 export const CATEGORY_FILTER_ALL = 'all';
 
@@ -72,7 +73,21 @@ const CategoryFilter: React.FunctionComponent<ICategoryFilter> = React.memo(({ n
 
 export const CategoryFilters = () => {
   return (
-    <Flex flexWrap="nowrap" pb="20px" mb="-20px" css={{ overflow: 'auto' }}>
+    <Flex
+      flexWrap="nowrap"
+      pb="20px"
+      mb="-20px"
+      css={{
+        overflow: 'auto',
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+        [`@media (max-width: ${getEmSize(breakpoints.md)}em)`]: {
+          overflowY: 'scroll',
+          '-webkit-overflow-scrolling': 'touch',
+        },
+      }}
+    >
       {Object.values(filterNames).map((name, index) => (
         <CategoryFilter key={index} name={name} />
       ))}
