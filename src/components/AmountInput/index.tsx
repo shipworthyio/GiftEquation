@@ -55,7 +55,7 @@ const Input: React.FunctionComponent = () => {
 export const AmountInput: React.FunctionComponent = () => {
   return (
     <Flex
-      width="66%"
+      width={[0.5, 0.5, 0.5, '66%']}
       bg={colors.background}
       p="5px 30px"
       mr="15px"
