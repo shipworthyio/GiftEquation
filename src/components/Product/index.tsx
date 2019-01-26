@@ -22,6 +22,11 @@ export interface IProduct {
   style: object;
 }
 
+export interface IProducts {
+  products: IProduct[];
+  listRef: React.MutableRefObject<any>;
+}
+
 export const Product: React.FunctionComponent<IProduct> = React.memo(
   ({ product, price, affiliatelink, imageurl, style }) => {
     return (
@@ -76,10 +81,6 @@ export const Product: React.FunctionComponent<IProduct> = React.memo(
     );
   }
 );
-
-export interface IProducts {
-  products: IProduct[];
-}
 
 export const filterProducts = memoize(
   (products: IProduct[], amount: number, amountFilter: AmountFilter, categoryFilter: Category): IProduct[] => {
@@ -139,7 +140,7 @@ export const groupProducts = memoize((products: IProduct[], itemsPerRow) => {
   return rows;
 });
 
-export const Products: React.FunctionComponent<IProducts> = React.memo(({ products }) => {
+export const Products: React.FunctionComponent<IProducts> = React.memo(({ products, listRef }) => {
   const { amount } = React.useContext(AmountContext);
   const { category: categoryFilter } = React.useContext(CategoryFilterContext);
   const { amountFilter } = React.useContext(AmountFilterContext);
@@ -181,6 +182,7 @@ export const Products: React.FunctionComponent<IProducts> = React.memo(({ produc
 
           return (
             <List
+              ref={listRef}
               style={{ padding: '40px 0' }}
               onScroll={({ scrollTop }) => {
                 if (showFilters) {

@@ -25,35 +25,43 @@ interface IPage {
   };
 }
 
+const Provider: React.FunctionComponent = ({ children }) => {
+  return (
+    <HeaderContextProvider>
+      <AmountFilterProvider>
+        <CategoryFilterProvider>
+          <AmountProvider>{children}</AmountProvider>
+        </CategoryFilterProvider>
+      </AmountFilterProvider>
+    </HeaderContextProvider>
+  );
+};
+
 const Page: React.FunctionComponent<IPage> = React.memo(({ data }) => {
+  const listRef = React.useRef(null);
+
   return (
     <>
       <SEO />
 
-      <HeaderContextProvider>
-        <AmountFilterProvider>
-          <CategoryFilterProvider>
-            <AmountProvider>
-              <Flex
-                flexDirection="column"
-                bg={colors.background}
-                css={{
-                  height: '100vh',
-                  position: 'relative',
-                  fontFamily: fonts.montserrat,
-                  '&::-webkit-scrollbar': {
-                    display: 'none',
-                  },
-                }}
-              >
-                <Header />
+      <Flex
+        flexDirection="column"
+        bg={colors.background}
+        css={{
+          height: '100vh',
+          position: 'relative',
+          fontFamily: fonts.montserrat,
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
+      >
+        <Provider>
+          <Header listRef={listRef} />
 
-                <Products products={data.allGoogleSheetProductsRow.edges.map(e => e.node)} />
-              </Flex>
-            </AmountProvider>
-          </CategoryFilterProvider>
-        </AmountFilterProvider>
-      </HeaderContextProvider>
+          <Products products={data.allGoogleSheetProductsRow.edges.map(e => e.node)} listRef={listRef} />
+        </Provider>
+      </Flex>
     </>
   );
 });

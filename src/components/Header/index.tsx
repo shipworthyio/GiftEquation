@@ -34,7 +34,11 @@ const FilterToggle = () => {
   );
 };
 
-export const Header = React.memo(() => {
+export interface IHeader {
+  listRef: React.MutableRefObject<any>;
+}
+
+export const Header: React.FunctionComponent<IHeader> = React.memo(({ listRef }) => {
   return (
     <Flex
       flexDirection="column"
@@ -49,7 +53,9 @@ export const Header = React.memo(() => {
               flex: 1,
             }}
             onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              if (listRef) {
+                listRef.current.scrollToPosition(0);
+              }
             }}
           >
             <Icon
