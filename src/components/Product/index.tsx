@@ -145,46 +145,6 @@ export const Products: React.FunctionComponent<IProducts> = React.memo(({ produc
   const { amountFilter } = React.useContext(AmountFilterContext);
   const { showFilters, toggleFilters } = React.useContext(HeaderContext);
 
-  let lastScrollTop = 0;
-  let targetScrollTop = 0;
-  let isUp = false;
-  const handleScrollToggle = React.useCallback(
-    ({ scrollTop }) => {
-      if (showFilters) {
-        // if we're scrolling up
-        if (lastScrollTop <= scrollTop) {
-          if (!isUp) {
-            targetScrollTop = scrollTop + 1000;
-            isUp = true;
-          }
-
-          if (scrollTop >= targetScrollTop) {
-            toggleFilters(false);
-          }
-        } else {
-          isUp = false;
-        }
-      } else {
-        // if we're scrolling up
-        if (lastScrollTop >= scrollTop) {
-          if (!isUp) {
-            targetScrollTop = scrollTop - 1000;
-            isUp = true;
-          }
-
-          if (scrollTop <= targetScrollTop) {
-            toggleFilters(true);
-          }
-        } else {
-          isUp = false;
-        }
-      }
-
-      lastScrollTop = scrollTop;
-    },
-    [showFilters]
-  );
-
   const filteredProducts = filterProducts(products, amount, amountFilter, categoryFilter);
 
   if (filteredProducts.length < 1) {
@@ -202,6 +162,10 @@ export const Products: React.FunctionComponent<IProducts> = React.memo(({ produc
     );
   }
 
+  let lastScrollTop = 0;
+  let targetScrollTop = 0;
+  let isScrollPositionSet = false;
+
   return (
     <Box flex="1">
       <AutoSizer>
@@ -218,7 +182,39 @@ export const Products: React.FunctionComponent<IProducts> = React.memo(({ produc
           return (
             <List
               style={{ padding: '40px 0' }}
-              onScroll={handleScrollToggle}
+              onScroll={({ scrollTop }) => {
+                if (showFilters) {
+                  // if we're scrolling up
+                  if (lastScrollTop <= scrollTop) {
+                    if (!isScrollPositionSet) {
+                      targetScrollTop = scrollTop + 100;
+                      isScrollPositionSet = true;
+                    }
+
+                    if (scrollTop >= targetScrollTop) {
+                      toggleFilters(false);
+                    }
+                  } else {
+                    isScrollPositionSet = false;
+                  }
+                } else if (width > breakpoints.md) {
+                  // if we're scrolling up
+                  if (lastScrollTop >= scrollTop) {
+                    if (!isScrollPositionSet) {
+                      targetScrollTop = scrollTop - 100;
+                      isScrollPositionSet = true;
+                    }
+
+                    if (scrollTop <= targetScrollTop) {
+                      toggleFilters(true);
+                    }
+                  } else {
+                    isScrollPositionSet = false;
+                  }
+                }
+
+                lastScrollTop = scrollTop;
+              }}
               width={width}
               height={height}
               rowCount={rows.length}

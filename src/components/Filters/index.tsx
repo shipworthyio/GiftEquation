@@ -15,20 +15,21 @@ const MobileFilter = () => {
   const { amount } = React.useContext(AmountContext);
   const { category } = React.useContext(CategoryFilterContext);
 
-  // Only show when filters are hidden
-  if (showFilters) {
-    return null;
-  }
-
   return (
     <Flex
       p="15px 24px"
       alignItems="center"
       onClick={toggleFilters}
+      bg={colors.white}
       css={{
         display: 'none',
         [`@media (max-width: ${getEmSize(breakpoints.md)}em)`]: {
           display: 'flex',
+          marginTop: showFilters ? '-400px' : 0,
+          transition: 'margin 0.5s ease-in-out',
+          boxShadow: showFilters ? 'none' : '0px 2px 4px 0px lightgrey',
+          borderBottomRightRadius: '8px',
+          borderBottomLeftRadius: '8px',
         },
       }}
     >
@@ -71,13 +72,20 @@ export const Filters = () => {
       css={{
         flex: '1',
         boxShadow: '0px 2px 4px 0px lightgrey',
+        [`@media (max-width: ${getEmSize(breakpoints.md)}em)`]: {
+          boxShadow: 'none',
+        },
       }}
     >
       <Flex
         flexWrap="wrap"
+        bg={colors.white}
         css={{
           marginTop: showFilters ? 0 : '-300px',
           transition: 'margin 0.5s ease-in-out',
+          [`@media (max-width: ${getEmSize(breakpoints.md)}em)`]: {
+            boxShadow: showFilters ? '0px 2px 4px 0px lightgrey' : 'none',
+          },
         }}
       >
         <Box

@@ -6,6 +6,7 @@ import { Filter } from 'src/components/Filter';
 
 import { colors, breakpoints } from 'src/styles/variables';
 import { getEmSize } from 'src/styles/mixins';
+import { HeaderContext } from '../Header';
 
 export const CATEGORY_FILTER_ALL = 'all';
 
@@ -62,8 +63,18 @@ export interface ICategoryFilter {
 
 const CategoryFilter: React.FunctionComponent<ICategoryFilter> = React.memo(({ name }) => {
   const { category, setCategory } = React.useContext(CategoryFilterContext);
+  const { toggleFilters } = React.useContext(HeaderContext);
 
-  const onClick = React.useCallback(() => setCategory(name), [name]);
+  const onClick = React.useCallback(
+    () => {
+      setCategory(name);
+
+      if (window.innerWidth <= breakpoints.md) {
+        toggleFilters(false);
+      }
+    },
+    [name]
+  );
 
   return (
     <Filter name={name} icon={IconNames[name]} isActive={category === name} bg={colors.category} onClick={onClick} />
