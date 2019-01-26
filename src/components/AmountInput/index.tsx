@@ -28,7 +28,7 @@ const Input: React.FunctionComponent = () => {
       min={0}
       max={100000}
       onChange={e => setAmount(Number(e.target.value))}
-      onFocus={e => e.target.select()}
+      onClick={e => e.target.select()}
       css={{
         flex: 1,
         textAlign: 'right',
