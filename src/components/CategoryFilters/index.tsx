@@ -84,7 +84,7 @@ export const CategoryFilters = () => {
         },
         [`@media (max-width: ${getEmSize(breakpoints.md)}em)`]: {
           overflowY: 'scroll',
-          '-webkit-overflow-scrolling': 'touch',
+          WebkitOverflowScrolling: 'touch',
         },
       }}
     >

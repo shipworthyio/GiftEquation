@@ -69,43 +69,48 @@ export const Filters = () => {
     <Box
       bg={colors.white}
       css={{
+        flex: '1',
         boxShadow: '0px 2px 4px 0px lightgrey',
       }}
     >
-      {showFilters && (
-        <Flex flexWrap="wrap">
-          <Box
-            width={[1, 1, 1, 1 / 3]}
-            pt="25px"
-            pb="20px"
-            pl="24px"
-            pr="15px"
-            css={{ boxShadow: `0px 2px 0px 0px lightgrey` }}
-          >
-            <Box pb="15px">
-              <Text fontWeight="bold" fontSize={dimensions.fontSize.large}>
-                Amount
-              </Text>
-            </Box>
-
-            <Flex flexWrap="nowrap">
-              <AmountInput />
-
-              <AmountFilters />
-            </Flex>
+      <Flex
+        flexWrap="wrap"
+        css={{
+          marginTop: showFilters ? 0 : '-300px',
+          transition: 'margin 0.5s ease-in-out',
+        }}
+      >
+        <Box
+          width={[1, 1, 1, 1 / 3]}
+          pt="25px"
+          pb="20px"
+          pl="24px"
+          pr="15px"
+          css={{ boxShadow: `0px 2px 0px 0px lightgrey` }}
+        >
+          <Box pb="15px">
+            <Text fontWeight="bold" fontSize={dimensions.fontSize.large}>
+              Amount
+            </Text>
           </Box>
 
-          <Box width={[1, 1, 1, 2 / 3]} mt="25px" mb="20px" css={{ borderLeft: '2px solid lightgrey', flex: 1 }}>
-            <Box>
-              <Text pb="15px" pl="24px" fontWeight="bold" fontSize={dimensions.fontSize.large}>
-                Filters
-              </Text>
+          <Flex flexWrap="nowrap">
+            <AmountInput />
 
-              <CategoryFilters />
-            </Box>
+            <AmountFilters />
+          </Flex>
+        </Box>
+
+        <Box width={[1, 1, 1, 2 / 3]} mt="25px" mb="20px" css={{ borderLeft: '2px solid lightgrey', flex: 1 }}>
+          <Box>
+            <Text pb="15px" pl="24px" fontWeight="bold" fontSize={dimensions.fontSize.large}>
+              Filters
+            </Text>
+
+            <CategoryFilters />
           </Box>
-        </Flex>
-      )}
+        </Box>
+      </Flex>
 
       <MobileFilter />
     </Box>

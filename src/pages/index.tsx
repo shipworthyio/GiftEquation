@@ -1,11 +1,11 @@
 import { graphql } from 'gatsby';
 import React from 'react';
-import { Box } from 'rebass';
+import { Flex } from 'rebass';
 
 import { AmountFilterProvider } from 'src/components/AmountFilters';
 import { AmountProvider } from 'src/components/AmountInput';
 import { CategoryFilterProvider } from 'src/components/CategoryFilters';
-import { Header } from 'src/components/Header';
+import { HeaderContextProvider, Header } from 'src/components/Header';
 import { Products, IProduct } from 'src/components/Product';
 import SEO from 'src/components/SEO';
 
@@ -30,28 +30,30 @@ const Page: React.FunctionComponent<IPage> = React.memo(({ data }) => {
     <>
       <SEO />
 
-      <AmountFilterProvider>
-        <CategoryFilterProvider>
-          <AmountProvider>
-            <Box
-              bg={colors.background}
-              css={{
-                position: 'relative',
-                fontFamily: fonts.montserrat,
-                '&::-webkit-scrollbar': {
-                  display: 'none',
-                },
-              }}
-            >
-              <Header />
+      <HeaderContextProvider>
+        <AmountFilterProvider>
+          <CategoryFilterProvider>
+            <AmountProvider>
+              <Flex
+                flexDirection="column"
+                bg={colors.background}
+                css={{
+                  height: '100vh',
+                  position: 'relative',
+                  fontFamily: fonts.montserrat,
+                  '&::-webkit-scrollbar': {
+                    display: 'none',
+                  },
+                }}
+              >
+                <Header />
 
-              <Box mx="auto" py="40px" css={{ maxWidth: 1380, overflowX: 'hidden' }}>
                 <Products products={data.allGoogleSheetProductsRow.edges.map(e => e.node)} />
-              </Box>
-            </Box>
-          </AmountProvider>
-        </CategoryFilterProvider>
-      </AmountFilterProvider>
+              </Flex>
+            </AmountProvider>
+          </CategoryFilterProvider>
+        </AmountFilterProvider>
+      </HeaderContextProvider>
     </>
   );
 });

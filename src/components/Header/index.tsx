@@ -4,7 +4,7 @@ import { Box, Flex, Text } from 'rebass';
 import { Filters } from 'src/components/Filters';
 import { Icon, IconNames } from 'src/components/Icon';
 
-import { colors, fonts } from 'src/styles/variables';
+import { colors } from 'src/styles/variables';
 
 export const HeaderContext = React.createContext({ showFilters: true, toggleFilters(showFilters: boolean) {} });
 
@@ -36,37 +36,38 @@ const FilterToggle = () => {
 
 export const Header = React.memo(() => {
   return (
-    <Box bg={colors.white} css={{ position: 'sticky', top: 0, left: 0, right: 0, zIndex: 100, userSelect: 'none' }}>
-      <HeaderContextProvider>
-        <Box mb="2px" css={{ boxShadow: `0px 2px 4px lightgrey`, height: 64 }}>
-          <Flex alignItems="center" css={{ height: '100%' }}>
-            <Flex
-              pl="24px"
-              alignItems="center"
+    <Flex
+      flexDirection="column"
+      css={{ position: 'sticky', top: 0, left: 0, right: 0, zIndex: 100, userSelect: 'none' }}
+    >
+      <Box bg={colors.white} mb="2px" css={{ boxShadow: `0px 2px 4px lightgrey`, height: 64, zIndex: 50 }}>
+        <Flex alignItems="center" css={{ height: '100%' }}>
+          <Flex
+            pl="24px"
+            alignItems="center"
+            css={{
+              flex: 1,
+            }}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            <Icon
+              icon={IconNames.logo}
               css={{
-                flex: 1,
+                cursor: 'pointer',
               }}
-              onClick={() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
-              <Icon
-                icon={IconNames.logo}
-                css={{
-                  cursor: 'pointer',
-                }}
-              />
-              <Text pl="15px" fontWeight="bold" css={{ cursor: 'pointer' }}>
-                Gift Equation
-              </Text>
-            </Flex>
-
-            <FilterToggle />
+            />
+            <Text pl="15px" fontWeight="bold" css={{ cursor: 'pointer' }}>
+              Gift Equation
+            </Text>
           </Flex>
-        </Box>
 
-        <Filters />
-      </HeaderContextProvider>
-    </Box>
+          <FilterToggle />
+        </Flex>
+      </Box>
+
+      <Filters />
+    </Flex>
   );
 });
