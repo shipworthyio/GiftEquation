@@ -183,7 +183,7 @@ export const Products: React.FunctionComponent<IProducts> = React.memo(({ produc
           return (
             <List
               ref={listRef}
-              style={{ padding: '40px 0' }}
+              style={{ padding: width <= breakpoints.md ? '20px 0' : '40px 0' }}
               onScroll={({ scrollTop }) => {
                 if (showFilters) {
                   // if we're scrolling up
