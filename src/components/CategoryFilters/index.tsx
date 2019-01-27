@@ -5,7 +5,6 @@ import { IconNames } from 'src/components/Icon';
 import { Filter } from 'src/components/Filter';
 
 import { colors, breakpoints } from 'src/styles/variables';
-import { getEmSize } from 'src/styles/mixins';
 import { HeaderContext } from '../Header';
 
 export const CATEGORY_FILTER_ALL = 'all';
@@ -93,7 +92,7 @@ export const CategoryFilters = () => {
         '&::-webkit-scrollbar': {
           display: 'none',
         },
-        [`@media (max-width: ${getEmSize(breakpoints.md)}em)`]: {
+        [`@media (max-width: ${breakpoints.md}px)`]: {
           overflowY: 'scroll',
           WebkitOverflowScrolling: 'touch',
         },

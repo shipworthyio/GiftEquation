@@ -7,7 +7,6 @@ import { CategoryFilters, CategoryFilterContext } from 'src/components/CategoryF
 import { Icon, IconNames } from 'src/components/Icon';
 import { HeaderContext } from 'src/components/Header';
 
-import { getEmSize } from 'src/styles/mixins';
 import { colors, breakpoints, dimensions } from 'src/styles/variables';
 
 const MobileFilter = () => {
@@ -23,7 +22,7 @@ const MobileFilter = () => {
       bg={colors.white}
       css={{
         display: 'none',
-        [`@media (max-width: ${getEmSize(breakpoints.md)}em)`]: {
+        [`@media (max-width: ${breakpoints.md}px)`]: {
           display: 'flex',
           marginTop: showFilters ? '-400px' : 0,
           transition: 'margin 0.5s ease-in-out',
@@ -72,7 +71,7 @@ export const Filters = () => {
       css={{
         flex: '1',
         boxShadow: '0px 2px 4px 0px lightgrey',
-        [`@media (max-width: ${getEmSize(breakpoints.md)}em)`]: {
+        [`@media (max-width: ${breakpoints.md}px)`]: {
           boxShadow: 'none',
         },
       }}
@@ -83,7 +82,7 @@ export const Filters = () => {
         css={{
           marginTop: showFilters ? 0 : '-300px',
           transition: 'margin 0.5s ease-in-out',
-          [`@media (max-width: ${getEmSize(breakpoints.md)}em)`]: {
+          [`@media (max-width: ${breakpoints.md}px)`]: {
             boxShadow: showFilters ? '0px 2px 4px 0px lightgrey' : 'none',
           },
         }}
