@@ -23,6 +23,7 @@ const Input: React.FunctionComponent = () => {
 
   return (
     <input
+      id="amount"
       type="number"
       label="amount"
       value={amount}

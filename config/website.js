@@ -11,4 +11,6 @@ module.exports = {
   logo: 'static/android-chrome-512x512.png',
   twitter: '', // TODO: Add twitter handle
   facebook: '', // TODO: Add facebook page
+  backgroundColor: '#ffffff',
+  themeColor: '#4fcc85',
 };

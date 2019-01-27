@@ -5,7 +5,7 @@ const website = require('./config/website');
 let gsheetOptions = {};
 if (process.env.GS_CONFIG) {
   gsheetOptions = JSON.parse(decodeURIComponent(`${process.env.GS_CONFIG}`));
-} else if (process.env.NODE_ENV !== 'production') {
+} else {
   gsheetOptions = require('./private/google-sheets-config.json');
 }
 
@@ -67,11 +67,13 @@ module.exports = {
       resolve: 'gatsby-plugin-manifest',
       options: {
         name: website.title,
-        short_name: website.titleAlt,
+        short_name: website.shortName,
         description: website.description,
         start_url: '/',
         display: 'standalone',
         icon: website.logo,
+        background_color: website.backgroundColor,
+        theme_color: website.themeColor,
       },
     },
 

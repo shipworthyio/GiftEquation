@@ -97,7 +97,7 @@ export const Filters = () => {
         >
           <Box pb="15px">
             <Text fontWeight="bold" fontSize={dimensions.fontSize.large}>
-              Amount
+              <label for="amount">Amount</label>
             </Text>
           </Box>
 
