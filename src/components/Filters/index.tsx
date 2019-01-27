@@ -15,13 +15,13 @@ const MobileFilter = () => {
   const { category } = React.useContext(CategoryFilterContext);
 
   return (
-    <Flex
-      p="15px 24px"
-      alignItems="center"
+    <div
       onClick={toggleFilters}
-      bg={colors.white}
       css={{
         display: 'none',
+        padding: '15px 24px',
+        alignItems: 'center',
+        backgroundColor: colors.white,
         [`@media (max-width: ${breakpoints.md}px)`]: {
           display: 'flex',
           marginTop: showFilters ? '-400px' : 0,
@@ -59,7 +59,7 @@ const MobileFilter = () => {
 
         <Box ml="10px">{category.charAt(0).toUpperCase() + category.slice(1)}</Box>
       </Flex>
-    </Flex>
+    </div>
   );
 };
 
