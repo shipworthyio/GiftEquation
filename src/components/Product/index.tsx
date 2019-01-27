@@ -169,7 +169,7 @@ export const Products: React.FunctionComponent<IProducts> = React.memo(({ produc
 
   return (
     <Box flex="1">
-      <AutoSizer>
+      <AutoSizer defaultHeight={1000} defaultWidth={1380}>
         {({ height, width }) => {
           let itemsPerRow = 3;
           if (width <= breakpoints.md) {

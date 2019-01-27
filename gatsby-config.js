@@ -28,7 +28,6 @@ module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-typescript',
-    'gatsby-plugin-emotion',
 
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
@@ -75,6 +74,9 @@ module.exports = {
         icon: website.logo,
       },
     },
+
+    'gatsby-plugin-styled-components',
+    'gatsby-plugin-emotion',
 
     // Must be placed at the end
     'gatsby-plugin-offline',
