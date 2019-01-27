@@ -24,6 +24,7 @@ const Input: React.FunctionComponent = () => {
   return (
     <input
       type="number"
+      label="amount"
       value={amount}
       min={0}
       max={100000}

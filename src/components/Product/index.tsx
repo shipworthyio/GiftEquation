@@ -168,7 +168,7 @@ export const Products: React.FunctionComponent<IProducts> = React.memo(({ produc
   let isScrollPositionSet = false;
 
   return (
-    <Box flex="1">
+    <main css={{ flex: 1 }}>
       <AutoSizer defaultHeight={1000} defaultWidth={1380}>
         {({ height, width }) => {
           let itemsPerRow = 3;
@@ -234,6 +234,6 @@ export const Products: React.FunctionComponent<IProducts> = React.memo(({ produc
           );
         }}
       </AutoSizer>
-    </Box>
+    </main>
   );
 });

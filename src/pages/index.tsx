@@ -44,24 +44,24 @@ const Page: React.FunctionComponent<IPage> = React.memo(({ data }) => {
     <>
       <SEO />
 
-      <Flex
-        flexDirection="column"
-        bg={colors.background}
-        css={{
-          height: '100vh',
-          position: 'relative',
-          fontFamily: fonts.montserrat,
-          '&::-webkit-scrollbar': {
-            display: 'none',
-          },
-        }}
-      >
-        <Provider>
+      <Provider>
+        <Flex
+          flexDirection="column"
+          bg={colors.background}
+          css={{
+            height: '100vh',
+            position: 'relative',
+            fontFamily: fonts.montserrat,
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+          }}
+        >
           <Header listRef={listRef} />
 
           <Products products={data.allGoogleSheetProductsRow.edges.map(e => e.node)} listRef={listRef} />
-        </Provider>
-      </Flex>
+        </Flex>
+      </Provider>
     </>
   );
 });

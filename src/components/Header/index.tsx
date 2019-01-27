@@ -40,9 +40,17 @@ export interface IHeader {
 
 export const Header: React.FunctionComponent<IHeader> = React.memo(({ listRef }) => {
   return (
-    <Flex
-      flexDirection="column"
-      css={{ position: 'sticky', top: 0, left: 0, right: 0, zIndex: 100, userSelect: 'none' }}
+    <header
+      css={{
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'sticky',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        userSelect: 'none',
+      }}
     >
       <Box bg={colors.white} mb="2px" css={{ boxShadow: `0px 2px 4px lightgrey`, height: 64, zIndex: 50 }}>
         <Flex alignItems="center" css={{ height: '100%' }}>
@@ -74,6 +82,6 @@ export const Header: React.FunctionComponent<IHeader> = React.memo(({ listRef })
       </Box>
 
       <Filters />
-    </Flex>
+    </header>
   );
 });
