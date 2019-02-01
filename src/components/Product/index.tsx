@@ -1,6 +1,7 @@
 import memoize from 'fast-memoize';
 import React from 'react';
 import { Image, Text, Link, Flex } from 'rebass';
+import sort from 'lodash.sortby';
 
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import List from 'react-virtualized/dist/commonjs/List';
@@ -84,26 +85,24 @@ export const Product: React.FunctionComponent<IProduct> = React.memo(
 
 export const filterProducts = memoize(
   (products: IProduct[], categoryFilter: Category): IProduct[] => {
-    return products
-      .filter(({ price, category = CATEGORY_FILTER_ALL, imageurl }) => {
-        if (!price || !imageurl) {
-          return false;
-        }
+    const sorted = sort(products, (product: IProduct) => Number(product.price.replace('$', '')));
+    if (!categoryFilter || categoryFilter === CATEGORY_FILTER_ALL) return sorted;
 
-        let inCategory = true;
-        if (categoryFilter && categoryFilter !== CATEGORY_FILTER_ALL) {
-          const categories = category ? category.split(',').map(c => c.toLowerCase().trim()) : [];
-          inCategory = categories.includes(categoryFilter);
-        }
+    const filter = categoryFilter.toLowerCase();
+    const filtered: IProduct[] = [];
+    const other: IProduct[] = [];
 
-        return inCategory;
-      })
-      .sort((a, b) => {
-        const priceA = Number(a.price.replace('$', ''));
-        const priceB = Number(b.price.replace('$', ''));
+    sorted.forEach((product: IProduct) => {
+      const categories = product.category ? product.category.split(',').map(c => c.toLowerCase().trim()) : [];
 
-        return priceA > priceB ? 1 : -1;
-      });
+      if (categories.includes(filter)) {
+        filtered.push(product);
+      } else {
+        other.push(product);
+      }
+    });
+
+    return [...filtered, ...other];
   }
 );
 

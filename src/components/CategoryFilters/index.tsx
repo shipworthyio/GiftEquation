@@ -53,21 +53,34 @@ export const CategoryFilterContext = React.createContext<ICategoryFilterContext>
 });
 
 export const CategoryFilterProvider: React.FunctionComponent = ({ children }) => {
-  const [category, setCategory] = React.useState(CATEGORY_FILTER_ALL as Category);
+  let defaultCategory = CATEGORY_FILTER_ALL;
+  if (typeof window !== 'undefined') {
+    if (window.location.search) {
+      const search = new URLSearchParams(window.location.search);
+      defaultCategory = search.get('c') || CATEGORY_FILTER_ALL;
+    }
+  }
+
+  const [category, setCategory] = React.useState(defaultCategory as Category);
 
   return <CategoryFilterContext.Provider value={{ category, setCategory }}>{children}</CategoryFilterContext.Provider>;
 };
 
 export interface ICategoryFilter {
   name: Category;
+  onClick(): void;
 }
 
-const CategoryFilter: React.FunctionComponent<ICategoryFilter> = React.memo(({ name }) => {
+const CategoryFilter: React.FunctionComponent<ICategoryFilter> = React.memo(({ name, onClick }) => {
   const { category, setCategory } = React.useContext(CategoryFilterContext);
   const { toggleFilters } = React.useContext(HeaderContext);
 
-  const onClick = React.useCallback(
+  const handleClick = React.useCallback(
     () => {
+      if (onClick) {
+        onClick();
+      }
+
       setCategory(name);
 
       if (window.innerWidth <= breakpoints.md) {
@@ -78,11 +91,17 @@ const CategoryFilter: React.FunctionComponent<ICategoryFilter> = React.memo(({ n
   );
 
   return (
-    <Filter name={name} icon={IconNames[name]} isActive={category === name} bg={colors.category} onClick={onClick} />
+    <Filter
+      name={name}
+      icon={IconNames[name]}
+      isActive={category === name}
+      bg={colors.category}
+      onClick={handleClick}
+    />
   );
 });
 
-export const CategoryFilters = () => {
+export const CategoryFilters = ({ onClick }: { onClick(): void }) => {
   const { showFilters } = React.useContext(HeaderContext);
 
   return (
@@ -116,7 +135,7 @@ export const CategoryFilters = () => {
           }}
         >
           {Object.values(filterNames).map((name, index) => (
-            <CategoryFilter key={index} name={name} />
+            <CategoryFilter key={index} name={name} onClick={onClick} />
           ))}
         </Flex>
       </Box>

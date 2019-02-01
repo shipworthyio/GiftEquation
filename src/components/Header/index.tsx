@@ -87,7 +87,13 @@ export const Header: React.FunctionComponent<IHeader> = React.memo(({ listRef })
         <FilterToggle />
       </Box>
 
-      <CategoryFilters />
+      <CategoryFilters
+        onClick={() => {
+          if (listRef) {
+            listRef.current.scrollToPosition(0);
+          }
+        }}
+      />
     </header>
   );
 });
