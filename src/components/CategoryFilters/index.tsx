@@ -1,11 +1,11 @@
 import React from 'react';
-import { Flex } from 'rebass';
+import { Box, Flex } from 'rebass';
 
 import { IconNames } from 'src/components/Icon';
 import { Filter } from 'src/components/Filter';
+import { HeaderContext } from 'src/components/Header';
 
 import { colors, breakpoints } from 'src/styles/variables';
-import { HeaderContext } from '../Header';
 
 export const CATEGORY_FILTER_ALL = 'all';
 
@@ -47,7 +47,9 @@ export interface ICategoryFilterContext {
 
 export const CategoryFilterContext = React.createContext<ICategoryFilterContext>({
   category: CATEGORY_FILTER_ALL,
-  setCategory(category) {},
+  setCategory() {
+    // NOOP
+  },
 });
 
 export const CategoryFilterProvider: React.FunctionComponent = ({ children }) => {
@@ -81,26 +83,43 @@ const CategoryFilter: React.FunctionComponent<ICategoryFilter> = React.memo(({ n
 });
 
 export const CategoryFilters = () => {
+  const { showFilters } = React.useContext(HeaderContext);
+
   return (
     <Flex
-      flexWrap="nowrap"
-      pb="20px"
-      pl="9px"
-      mb="-20px"
+      flexWrap="wrap"
+      bg={colors.white}
       css={{
-        overflow: 'auto',
-        '&::-webkit-scrollbar': {
-          display: 'none',
-        },
-        [`@media (max-width: ${breakpoints.md}px)`]: {
-          overflowY: 'scroll',
-          WebkitOverflowScrolling: 'touch',
-        },
+        marginTop: showFilters ? 0 : '-120px',
+        opacity: showFilters ? 1 : 0,
+        transition: 'all 0.5s ease-in-out',
+        boxShadow: '0px 2px 4px 0px lightgrey',
       }}
     >
-      {Object.values(filterNames).map((name, index) => (
-        <CategoryFilter key={index} name={name} />
-      ))}
+      <Box width={[1, 1, 1, 2 / 3]} mt="25px" mb="20px" css={{ borderLeft: '2px solid lightgrey', flex: 1 }}>
+        <Flex
+          flexWrap="nowrap"
+          justifyContent="center"
+          pb="20px"
+          pl="9px"
+          mb="-20px"
+          css={{
+            overflow: 'auto',
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+            [`@media (max-width: ${breakpoints.lg}px)`]: {
+              overflowY: 'scroll',
+              WebkitOverflowScrolling: 'touch',
+              justifyContent: 'flex-start',
+            },
+          }}
+        >
+          {Object.values(filterNames).map((name, index) => (
+            <CategoryFilter key={index} name={name} />
+          ))}
+        </Flex>
+      </Box>
     </Flex>
   );
 };

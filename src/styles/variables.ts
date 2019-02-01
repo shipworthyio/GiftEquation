@@ -5,7 +5,7 @@ export const colors = {
   background: '#faf9f9',
   filterText: '#b9b9b9',
 
-  amountFilter: '#48ce82',
+  brand: '#48ce82',
   category: '#5d8cef',
 
   green: '#34b25d',
@@ -14,7 +14,6 @@ export const colors = {
   black: '#383838',
   gray: '#3b3636',
 
-  brand: '#663399',
   lilac: '#9d7cbf',
   accent: '#ffb238',
   success: '#37b635',

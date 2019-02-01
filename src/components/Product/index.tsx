@@ -1,12 +1,10 @@
 import memoize from 'fast-memoize';
 import React from 'react';
-import { Image, Text, Link, Flex, Box } from 'rebass';
+import { Image, Text, Link, Flex } from 'rebass';
 
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import List from 'react-virtualized/dist/commonjs/List';
 
-import { AmountFilterContext, AmountFilter, AMOUNT_FILTER_BELOW } from 'src/components/AmountFilters';
-import { AmountContext } from 'src/components/AmountInput';
 import { CategoryFilterContext, Category, CATEGORY_FILTER_ALL } from 'src/components/CategoryFilters';
 import { HeaderContext } from 'src/components/Header';
 
@@ -17,7 +15,7 @@ export interface IProduct {
   affiliatelink: string;
   tags: string[];
   category: Category;
-  price: number;
+  price: string;
   imageurl: string;
   style: object;
 }
@@ -31,68 +29,65 @@ export const Product: React.FunctionComponent<IProduct> = React.memo(
   ({ product, price, affiliatelink, imageurl, style }) => {
     return (
       <Flex alignItems="center" justifyContent="center" style={{ ...style, margin: '10px' }}>
-        <Link
-          target="__blank"
-          href={affiliatelink}
-          width={widths.product}
-          bg={colors.white}
-          p="20px"
-          css={{
-            borderRadius: '8px',
-            height: heights.product,
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
-            textDecoration: 'none',
-            boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
-            '&:hover': {
-              boxShadow: '0 22px 43px rgba(0,0,0,0.15)',
-              transform: 'translateY(-4px)',
-              transition: '0.3s',
-            },
-            userSelect: 'none',
-          }}
-        >
-          <Image height="66%" src={imageurl} alt={product} />
+        <article>
+          <Link
+            target="__blank"
+            href={affiliatelink}
+            width={widths.product}
+            bg={colors.white}
+            p="20px"
+            css={{
+              borderRadius: '8px',
+              height: heights.product,
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
+              textDecoration: 'none',
+              boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
+              '&:hover': {
+                boxShadow: '0 22px 43px rgba(0,0,0,0.15)',
+                transform: 'translateY(-4px)',
+                transition: '0.3s',
+              },
+              userSelect: 'none',
+            }}
+          >
+            <Image height="66%" src={imageurl} alt={product} />
 
-          <Flex alignItems="center" flex="1">
-            <Text
-              mt="20px"
-              fontSize={dimensions.fontSize.base}
-              fontWeight="bold"
-              color={colors.gray}
-              css={{
-                flex: 1,
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-              }}
-            >
-              {product}
-            </Text>
-          </Flex>
+            <Flex alignItems="center" flex="1">
+              <Text
+                mt="20px"
+                fontSize={dimensions.fontSize.base}
+                fontWeight="bold"
+                color={colors.gray}
+                css={{
+                  flex: 1,
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {product}
+              </Text>
+            </Flex>
 
-          <Flex alignItems="center">
-            <Text my="10px" color={colors.green} fontSize={dimensions.fontSize.md} fontWeight="bold">
-              {price || '$11.99'}
-            </Text>
-          </Flex>
-        </Link>
+            <Flex alignItems="center">
+              <Text my="10px" color={colors.green} fontSize={dimensions.fontSize.md} fontWeight="bold">
+                {price || '$11.99'}
+              </Text>
+            </Flex>
+          </Link>
+        </article>
       </Flex>
     );
   }
 );
 
 export const filterProducts = memoize(
-  (products: IProduct[], amount: number, amountFilter: AmountFilter, categoryFilter: Category): IProduct[] => {
+  (products: IProduct[], categoryFilter: Category): IProduct[] => {
     return products
       .filter(({ price, category = CATEGORY_FILTER_ALL, imageurl }) => {
         if (!price || !imageurl) {
           return false;
-        }
-
-        let cost = price;
-        if (typeof price === 'string') {
-          cost = Number(price.replace('$', ''));
         }
 
         let inCategory = true;
@@ -101,22 +96,11 @@ export const filterProducts = memoize(
           inCategory = categories.includes(categoryFilter);
         }
 
-        let inRange = true;
-        if (amountFilter === AMOUNT_FILTER_BELOW) {
-          inRange = cost <= amount;
-        } else {
-          inRange = cost >= amount;
-        }
-
-        return inRange && inCategory;
+        return inCategory;
       })
       .sort((a, b) => {
         const priceA = Number(a.price.replace('$', ''));
         const priceB = Number(b.price.replace('$', ''));
-
-        if (amountFilter === AMOUNT_FILTER_BELOW) {
-          return priceA < priceB ? 1 : -1;
-        }
 
         return priceA > priceB ? 1 : -1;
       });
@@ -141,19 +125,16 @@ export const groupProducts = memoize((products: IProduct[], itemsPerRow) => {
 });
 
 export const Products: React.FunctionComponent<IProducts> = React.memo(({ products, listRef }) => {
-  const { amount } = React.useContext(AmountContext);
   const { category: categoryFilter } = React.useContext(CategoryFilterContext);
-  const { amountFilter } = React.useContext(AmountFilterContext);
   const { showFilters, toggleFilters } = React.useContext(HeaderContext);
 
-  const filteredProducts = filterProducts(products, amount, amountFilter, categoryFilter);
+  const filteredProducts = filterProducts(products, categoryFilter);
 
   if (filteredProducts.length < 1) {
     return (
       <Flex justifyContent="center" alignItems="center" css={{ height: 300 }}>
         <Text fontSize={dimensions.fontSize.lg}>
-          No products found{' '}
-          <span css={{ color: colors.amountFilter, textDecoration: 'underline' }}>{amountFilter}</span> ${amount} in the{' '}
+          No products found in the{' '}
           <span css={{ color: colors.category, textDecoration: 'underline' }}>
             {categoryFilter.charAt(0).toUpperCase() + categoryFilter.slice(1)}
           </span>{' '}

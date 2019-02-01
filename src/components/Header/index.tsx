@@ -1,12 +1,17 @@
 import React from 'react';
-import { Box, Flex, Text } from 'rebass';
+import { Box, Flex } from 'rebass';
 
-import { Filters } from 'src/components/Filters';
+import { CategoryFilters } from 'src/components/CategoryFilters';
 import { Icon, IconNames } from 'src/components/Icon';
 
 import { colors } from 'src/styles/variables';
 
-export const HeaderContext = React.createContext({ showFilters: true, toggleFilters(showFilters: boolean) {} });
+export const HeaderContext = React.createContext({
+  showFilters: true,
+  toggleFilters(showFilters: boolean) {
+    // NOOP
+  },
+});
 
 export const HeaderContextProvider: React.FunctionComponent = ({ children }) => {
   const [showFilters, toggleFilters] = React.useState(true);
@@ -22,7 +27,7 @@ const FilterToggle = () => {
       p="10px 24px"
       alignItems="center"
       justifyContent="center"
-      css={{ height: '100%' }}
+      css={{ height: '100%', position: 'absolute', top: 0, right: 0 }}
       onClick={() => toggleFilters(!showFilters)}
     >
       <Icon
@@ -52,36 +57,37 @@ export const Header: React.FunctionComponent<IHeader> = React.memo(({ listRef })
         userSelect: 'none',
       }}
     >
-      <Box bg={colors.white} mb="2px" css={{ boxShadow: `0px 2px 4px lightgrey`, height: 64, zIndex: 50 }}>
-        <Flex alignItems="center" css={{ height: '100%' }}>
-          <Flex
-            pl="24px"
-            alignItems="center"
+      <Box
+        bg={colors.white}
+        mb="2px"
+        css={{ position: 'relative', boxShadow: `0px 2px 4px lightgrey`, height: 64, zIndex: 50 }}
+      >
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          css={{
+            flex: 1,
+            height: '100%',
+          }}
+          onClick={() => {
+            if (listRef) {
+              listRef.current.scrollToPosition(0);
+            }
+          }}
+        >
+          <Icon
+            icon={IconNames.logo}
+            color={colors.brand}
             css={{
-              flex: 1,
+              cursor: 'pointer',
             }}
-            onClick={() => {
-              if (listRef) {
-                listRef.current.scrollToPosition(0);
-              }
-            }}
-          >
-            <Icon
-              icon={IconNames.logo}
-              css={{
-                cursor: 'pointer',
-              }}
-            />
-            <Text pl="15px" fontWeight="bold" css={{ cursor: 'pointer' }}>
-              Gift Equation
-            </Text>
-          </Flex>
-
-          <FilterToggle />
+          />
         </Flex>
+
+        <FilterToggle />
       </Box>
 
-      <Filters />
+      <CategoryFilters />
     </header>
   );
 });

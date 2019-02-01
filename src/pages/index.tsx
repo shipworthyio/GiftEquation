@@ -2,8 +2,6 @@ import { graphql } from 'gatsby';
 import React from 'react';
 import { Flex } from 'rebass';
 
-import { AmountFilterProvider } from 'src/components/AmountFilters';
-import { AmountProvider } from 'src/components/AmountInput';
 import { CategoryFilterProvider } from 'src/components/CategoryFilters';
 import { HeaderContextProvider, Header } from 'src/components/Header';
 import { Products, IProduct } from 'src/components/Product';
@@ -28,11 +26,7 @@ interface IPage {
 const Provider: React.FunctionComponent = ({ children }) => {
   return (
     <HeaderContextProvider>
-      <AmountFilterProvider>
-        <CategoryFilterProvider>
-          <AmountProvider>{children}</AmountProvider>
-        </CategoryFilterProvider>
-      </AmountFilterProvider>
+      <CategoryFilterProvider>{children}</CategoryFilterProvider>
     </HeaderContextProvider>
   );
 };
