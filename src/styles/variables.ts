@@ -27,7 +27,7 @@ export const colors = {
 };
 
 export const fonts = {
-  montserrat: '"Montserrat", sans-serif',
+  montserrat: '"Montserrat:700", sans-serif',
 };
 
 export const breakpoints = {
