@@ -45,6 +45,7 @@ const Page: React.FunctionComponent<IPage> = React.memo(({ data }) => {
           css={{
             height: '100vh',
             position: 'relative',
+            overflow: 'hidden',
             fontFamily: fonts.montserrat,
             '&::-webkit-scrollbar': {
               display: 'none',
