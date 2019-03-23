@@ -58,7 +58,7 @@ export const Product: React.FunctionComponent<IProduct> = React.memo(
             <Flex alignItems="center" flex="1">
               <Text
                 mt="20px"
-                fontSize={dimensions.fontSize.base}
+                fontSize={dimensions.fontSize.regular}
                 fontWeight="bold"
                 color={colors.gray}
                 css={{
