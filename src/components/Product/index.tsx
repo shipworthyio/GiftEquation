@@ -71,11 +71,11 @@ export const Product: React.FunctionComponent<IProduct> = React.memo(
               </Text>
             </Flex>
 
-            <Flex alignItems="center">
+            {/* <Flex alignItems="center">
               <Text my="10px" color={colors.green} fontSize={dimensions.fontSize.md} fontWeight="bold">
                 {price || '$11.99'}
               </Text>
-            </Flex>
+            </Flex> */}
           </Link>
         </article>
       </Flex>
