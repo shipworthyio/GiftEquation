@@ -1,6 +1,6 @@
 import memoize from 'fast-memoize';
 import React from 'react';
-import { Image, Text, Link, Flex } from 'rebass';
+import { Image, Text, Link, Flex, Box } from 'rebass';
 import sort from 'lodash.sortby';
 
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
@@ -8,7 +8,7 @@ import List from 'react-virtualized/dist/commonjs/List';
 
 import { CategoryFilterContext, Category, CATEGORY_FILTER_ALL } from 'src/components/CategoryFilters';
 import { HeaderContext } from 'src/components/Header';
-
+import { Icon } from 'src/components/Icon';
 import { colors, dimensions, heights, widths, breakpoints } from 'src/styles/variables';
 
 export interface IProduct {
@@ -26,62 +26,78 @@ export interface IProducts {
   listRef: React.MutableRefObject<any>;
 }
 
-export const Product: React.FunctionComponent<IProduct> = React.memo(
-  ({ product, price, affiliatelink, imageurl, style }) => {
-    return (
-      <Flex alignItems="center" justifyContent="center" style={{ ...style, margin: '10px' }}>
-        <article>
-          <Link
-            target="__blank"
-            href={affiliatelink}
-            width={widths.product}
-            bg={colors.white}
-            p="20px"
+export const Product: React.FunctionComponent<IProduct> = React.memo(({ product, affiliatelink, imageurl, style }) => {
+  return (
+    <Flex alignItems="center" justifyContent="center" style={{ ...style, margin: '10px' }}>
+      <article>
+        <Link
+          target="__blank"
+          href={affiliatelink}
+          width={widths.product}
+          bg={colors.white}
+          p="30px 60px"
+          css={{
+            borderRadius: '8px',
+            height: heights.product,
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            textDecoration: 'none',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
+            '&:hover': {
+              boxShadow: '0 22px 43px rgba(0,0,0,0.15)',
+              transform: 'translateY(-4px)',
+              transition: '0.3s',
+            },
+            userSelect: 'none',
+          }}
+        >
+          <Image height="60%" src={imageurl} alt={product} />
+
+          <Flex flex="1" css={{ marginTop: '30px' }}>
+            <Text
+              fontSize={dimensions.fontSize.regular}
+              fontWeight="bold"
+              color={colors.gray}
+              css={{
+                flex: 1,
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {product}
+            </Text>
+          </Flex>
+
+          <Flex
             css={{
-              borderRadius: '8px',
-              height: heights.product,
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              textDecoration: 'none',
-              boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
-              '&:hover': {
-                boxShadow: '0 22px 43px rgba(0,0,0,0.15)',
-                transform: 'translateY(-4px)',
-                transition: '0.3s',
-              },
-              userSelect: 'none',
+              height: '45px',
+              border: '1px solid #e9e9e9',
+              borderRadius: '5px',
+              cursor: 'pointer',
             }}
           >
-            <Image height="66%" src={imageurl} alt={product} />
+            <Icon icon="amazon" css={{ padding: '10px 0', flex: 1 }} />
 
-            <Flex alignItems="center" flex="1">
-              <Text
-                mt="20px"
-                fontSize={dimensions.fontSize.regular}
-                fontWeight="bold"
-                color={colors.gray}
-                css={{
-                  flex: 1,
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {product}
-              </Text>
+            <Flex
+              alignItems="center"
+              css={{
+                fontSize: '13px',
+                background: '#308cc3',
+                color: 'white',
+                padding: '15px',
+                borderTopRightRadius: '5px',
+                borderBottomRightRadius: '5px',
+              }}
+            >
+              <Box>BUY NOW</Box>
             </Flex>
-
-            {/* <Flex alignItems="center">
-              <Text my="10px" color={colors.green} fontSize={dimensions.fontSize.md} fontWeight="bold">
-                {price || '$11.99'}
-              </Text>
-            </Flex> */}
-          </Link>
-        </article>
-      </Flex>
-    );
-  }
-);
+          </Flex>
+        </Link>
+      </article>
+    </Flex>
+  );
+});
 
 export const filterProducts = memoize(
   (products: IProduct[], categoryFilter: Category): IProduct[] => {

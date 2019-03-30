@@ -3,6 +3,7 @@ import React from 'react';
 import { Flex } from 'rebass';
 
 export type IconName =
+  | 'amazon'
   | 'all'
   | 'arrowDown'
   | 'arrowUp'
@@ -22,6 +23,7 @@ export type IconName =
   | 'techie';
 
 export const IconNames: { [key: string]: IconName } = {
+  amazon: 'amazon',
   all: 'all',
   arrowDown: 'arrowDown',
   arrowUp: 'arrowUp',
@@ -43,6 +45,8 @@ export const IconNames: { [key: string]: IconName } = {
 
 export interface IIcon {
   icon: IconName;
+  height?: string;
+  width?: string;
   color?: string;
   css?: any;
   onClick?: () => void;
